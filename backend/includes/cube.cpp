@@ -76,6 +76,23 @@ void Cube::turnFace(string direction, int times){
             side[4][2][1] = side[4][1][2];
             side[4][1][2] = buffer;
         }
+        else if(direction == "LCC"){
+            int top = side[0][0][0], mid = side[0][1][0], bot = side[0][2][0];
+            side[0][0][0] = side[1][0][0], side[0][1][0] = side[1][1][0], side[0][2][0] = side[1][2][0];
+            side[1][0][0] = side[5][0][0], side[1][1][0] = side[5][1][0], side[1][2][0] = side[5][2][0];
+            side[5][0][0] = side[3][2][2], side[5][1][0] = side[3][1][2], side[5][2][0] = side[3][0][2];
+            side[3][0][2] = bot, side[3][1][2] = mid, side[3][2][2] = top;
+            int buffer = side[4][0][0];
+            side[4][0][0] = side[4][0][2];
+            side[4][0][2] = side[4][2][2];
+            side[4][2][2] = side[4][2][0];
+            side[4][2][0] = buffer;
+            buffer = side[4][0][1];
+            side[4][0][1] = side[4][1][2];
+            side[4][1][2] = side[4][2][1];
+            side[4][2][1] = side[4][1][0];
+            side[4][1][0] = buffer;
+        }
         else if(direction == "UC"){
             int left=side[1][0][0], mid=side[1][0][1], right=side[1][0][2];
             for(int firstSide = 1;firstSide<=3;firstSide++){
@@ -113,6 +130,26 @@ void Cube::turnFace(string direction, int times){
             side[0][1][2] = side[0][2][1];
             side[0][2][1] = side[0][1][0];
             side[0][1][0] = buffer;
+        }
+        else if(direction == "DC"){
+            int left = side[1][2][0], mid = side[1][2][1], right = side[1][2][2];
+            side[1][2][0] = side[4][2][0], side[1][2][1] = side[4][2][1], side[1][2][2] = side[4][2][2];
+            for(int first=3;first>1;first--){
+                for(int secondDimen=0;secondDimen<3;secondDimen++){
+                    side[first+1][2][secondDimen] = side[first][2][secondDimen];
+                }
+            }
+            side[2][2][0] = left, side[2][2][1] = mid, side[2][2][2] = right;
+            int buffer = side[5][0][0];
+            side[5][0][0] = side[5][2][0];
+            side[5][2][0] = side[5][2][2];
+            side[5][2][2] = side[5][0][2];
+            side[5][0][2] = buffer;
+            buffer = side[5][0][1];
+            side[5][0][1] = side[5][1][0];
+            side[5][1][0] = side[5][2][1];
+            side[5][2][1] = side[5][1][2];
+            side[5][1][2] = buffer;
         }
     }
 }
