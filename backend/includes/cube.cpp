@@ -1,6 +1,8 @@
 #include <iostream>
 #include "cube.h"
+#include "json.hpp"
 using namespace std;
+using json = nlohmann::json;
 
 Cube::Cube(){
     for(int currentSide=0;currentSide<6;currentSide++){
@@ -239,4 +241,21 @@ void Cube::turnFace(string direction, int times){
             side[3][1][0] = buffer;
         }
     }
+}
+/*
+auto Cube::getCube(){
+    return side;
+}*/
+json Cube::toJson(){
+    json j;
+    for(int first=0;first<6;first++){
+        j["side" + to_string(first)] = json::array();
+        for(int secondDimen=0;secondDimen<3;secondDimen++){
+            j["side" + to_string(first)].push_back(json::array());
+            for(int thirdDimen=0;thirdDimen<3;thirdDimen++){
+                j["side" + to_string(first)][secondDimen].push_back(side[first][secondDimen][thirdDimen]);
+            }
+        }
+    }
+    return j;
 }
